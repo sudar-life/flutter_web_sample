@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:web_sample_02/src/common/screen_layout.dart';
+import 'package:web_sample_02/src/pages/flutter_page.dart';
 
 class SideMenuWidget extends StatefulWidget {
   const SideMenuWidget();
@@ -51,27 +53,52 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget get sideMenu => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _mainMenu("Flutter"),
+          _subMenu("당근마켓 클론 코딩", () {}),
+          _subMenu("Bloc 패턴", () {}),
+          _subMenu("Provider 사용", () {}),
+          _subMenu("Firebase Sns 로그인", () {}),
+          _subMenu("GetX 설명", () {}),
+        ],
+      );
+
+  Widget _mobileLayout() {
+    return Container(
+      width: MediaQuery.of(context).size.width * 0.7,
+      height: double.infinity,
+      color: Colors.white,
+      child: SingleChildScrollView(
+        controller: scrollController,
+        child: Container(
+          padding: const EdgeInsets.all(20),
+          child: sideMenu,
+        ),
+      ),
+    );
+  }
+
+  Widget _desktopLayout() {
     return Scrollbar(
       isAlwaysShown: false,
       controller: scrollController,
       child: SingleChildScrollView(
         controller: scrollController,
         child: Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _mainMenu("Flutter"),
-              _subMenu("당근마켓 클론 코딩", () {}),
-              _subMenu("Bloc 패턴", () {}),
-              _subMenu("Provider 사용", () {}),
-              _subMenu("Firebase Sns 로그인", () {}),
-              _subMenu("GetX 설명", () {}),
-            ],
-          ),
+          child: sideMenu,
         ),
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ScreenLayout(
+      mobile: _mobileLayout(),
+      tablet: _desktopLayout(),
+      desktop: _desktopLayout(),
     );
   }
 }

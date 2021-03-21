@@ -17,13 +17,19 @@ class ContentLayoutView extends StatelessWidget {
               child: contentWidget,
             ),
           ),
-          SizedBox(width: 50),
-          ConstrainedBox(
-            constraints: BoxConstraints(minWidth: 150),
-            child: Container(
-              child: leftMenu,
-            ),
-          )
+          this.leftMenu == null
+              ? Container()
+              : Row(
+                  children: [
+                    SizedBox(width: 50),
+                    ConstrainedBox(
+                      constraints: BoxConstraints(minWidth: 150),
+                      child: Container(
+                        child: leftMenu,
+                      ),
+                    )
+                  ],
+                )
         ],
       ),
     );
