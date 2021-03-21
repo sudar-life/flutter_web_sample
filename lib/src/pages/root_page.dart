@@ -15,6 +15,14 @@ class RootPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Container(
+                width: double.infinity,
+                color: Colors.black,
+                child: Image.asset(
+                  "assets/images/title_thumbnail.png",
+                  width: 150,
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 15),
                 child: Text(
