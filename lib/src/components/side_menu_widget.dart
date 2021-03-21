@@ -8,6 +8,8 @@ class SideMenuWidget extends StatefulWidget {
 }
 
 class _SideMenuWidgetState extends State<SideMenuWidget> {
+  final ScrollController scrollController = ScrollController();
+
   Widget _mainMenu(String menu) {
     return Container(
       padding: const EdgeInsets.only(bottom: 10),
@@ -51,17 +53,24 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _mainMenu("Flutter"),
-          _subMenu("당근마켓 클론 코딩", () {}),
-          _subMenu("Bloc 패턴", () {}),
-          _subMenu("Provider 사용", () {}),
-          _subMenu("Firebase Sns 로그인", () {}),
-          _subMenu("GetX 설명", () {}),
-        ],
+    return Scrollbar(
+      isAlwaysShown: false,
+      controller: scrollController,
+      child: SingleChildScrollView(
+        controller: scrollController,
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _mainMenu("Flutter"),
+              _subMenu("당근마켓 클론 코딩", () {}),
+              _subMenu("Bloc 패턴", () {}),
+              _subMenu("Provider 사용", () {}),
+              _subMenu("Firebase Sns 로그인", () {}),
+              _subMenu("GetX 설명", () {}),
+            ],
+          ),
+        ),
       ),
     );
   }
