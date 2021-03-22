@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:web_sample_02/src/controller/screen_layout_controller.dart';
-import 'dart:html' as html;
+import 'package:url_launcher/url_launcher.dart';
 
 class NavigationMenu extends GetView<ScreenLayoutController> {
   const NavigationMenu();
@@ -23,16 +23,19 @@ class NavigationMenu extends GetView<ScreenLayoutController> {
     );
   }
 
+  void _link(String _url) async {
+    if (await canLaunch(_url)) {
+      await launch(_url);
+    }
+  }
+
   List<Widget> get menus => [
         menu("홈", () {}),
         menu("블로그", () {
-          if (GetPlatform.isWeb)
-            html.window.open('https://sudarlife.tistory.com/', '');
+          _link('https://sudarlife.tistory.com/');
         }),
         menu("유튜브", () {
-          if (GetPlatform.isWeb)
-            html.window.open(
-                'https://www.youtube.com/channel/UCbMGBIayK26L4VaFrs5jyBw', '');
+          _link('https://www.youtube.com/channel/UCbMGBIayK26L4VaFrs5jyBw');
         }),
       ];
 
