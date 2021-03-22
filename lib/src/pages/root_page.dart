@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:web_sample_02/src/template/default_template.dart';
 
 class RootPage extends StatelessWidget {
   RootPage();
@@ -6,7 +7,8 @@ class RootPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scrollbar(
+    return DefaultTemplate(
+        body: Scrollbar(
       isAlwaysShown: false,
       controller: scrollController,
       child: SingleChildScrollView(
@@ -38,6 +40,6 @@ class RootPage extends StatelessWidget {
           ),
         ),
       ),
-    );
+    ));
   }
 }

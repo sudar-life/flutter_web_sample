@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:web_sample_02/src/common/screen_layout.dart';
+import 'package:get/get.dart';
+import 'package:web_sample_02/src/controller/screen_layout_controller.dart';
+import 'dart:html' as html;
 
-class NavigationMenu extends StatelessWidget {
+class NavigationMenu extends GetView<ScreenLayoutController> {
   const NavigationMenu();
 
   Widget menu(String menu, GestureTapCallback onTap) {
@@ -23,8 +25,13 @@ class NavigationMenu extends StatelessWidget {
 
   List<Widget> get menus => [
         menu("홈", () {}),
-        menu("블로그", () {}),
-        menu("유튜브", () {}),
+        menu("블로그", () {
+          html.window.open('https://sudarlife.tistory.com/', '');
+        }),
+        menu("유튜브", () {
+          html.window.open(
+              'https://www.youtube.com/channel/UCbMGBIayK26L4VaFrs5jyBw', '');
+        }),
       ];
 
   Widget _mobileLayout() {
@@ -57,10 +64,14 @@ class NavigationMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenLayout(
-      mobile: _mobileLayout(),
-      tablet: _desktopLayout(),
-      desktop: _desktopLayout(),
-    );
+    switch (controller.screenType.value) {
+      case ScreenSizeType.MOBILE:
+        return _mobileLayout();
+      case ScreenSizeType.TABLET:
+        return _desktopLayout();
+      case ScreenSizeType.DESKTOP:
+      default:
+        return _desktopLayout();
+    }
   }
 }

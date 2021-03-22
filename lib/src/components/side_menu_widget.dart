@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:web_sample_02/src/common/screen_layout.dart';
-import 'package:web_sample_02/src/pages/flutter_page.dart';
+import 'package:get/get.dart';
+import 'package:get/get_state_manager/src/simple/get_view.dart';
+import 'package:web_sample_02/src/controller/screen_layout_controller.dart';
 
-class SideMenuWidget extends StatefulWidget {
-  const SideMenuWidget();
-
-  @override
-  _SideMenuWidgetState createState() => _SideMenuWidgetState();
-}
-
-class _SideMenuWidgetState extends State<SideMenuWidget> {
+class SideMenuWidget extends GetView<ScreenLayoutController> {
+  SideMenuWidget();
   final ScrollController scrollController = ScrollController();
 
   Widget _mainMenu(String menu) {
@@ -57,7 +52,9 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _mainMenu("Flutter"),
-          _subMenu("당근마켓 클론 코딩", () {}),
+          _subMenu("당근마켓 클론 코딩", () {
+            Get.toNamed("/flutter");
+          }),
           _subMenu("Bloc 패턴", () {}),
           _subMenu("Provider 사용", () {}),
           _subMenu("Firebase Sns 로그인", () {}),
@@ -67,7 +64,7 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
 
   Widget _mobileLayout() {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.7,
+      width: Get.size.width * 0.7,
       height: double.infinity,
       color: Colors.white,
       child: SingleChildScrollView(
@@ -95,10 +92,14 @@ class _SideMenuWidgetState extends State<SideMenuWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenLayout(
-      mobile: _mobileLayout(),
-      tablet: _desktopLayout(),
-      desktop: _desktopLayout(),
-    );
+    switch (controller.screenType.value) {
+      case ScreenSizeType.MOBILE:
+        return _mobileLayout();
+      case ScreenSizeType.TABLET:
+        return _desktopLayout();
+      case ScreenSizeType.DESKTOP:
+      default:
+        return _desktopLayout();
+    }
   }
 }

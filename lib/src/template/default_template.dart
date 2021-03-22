@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:web_sample_02/src/common/screen_layout.dart';
+import 'package:web_sample_02/src/components/content_layout_view.dart';
 import 'package:web_sample_02/src/components/footer.dart';
 import 'package:web_sample_02/src/components/navigation_menu.dart';
 import 'package:web_sample_02/src/components/side_menu_widget.dart';
-import 'package:web_sample_02/src/pages/root_page.dart';
+import 'package:web_sample_02/src/controller/screen_layout_controller.dart';
 
-import 'components/content_layout_view.dart';
-
-class HomePage extends StatelessWidget {
+class DefaultTemplate extends StatelessWidget {
   final GlobalKey<ScaffoldState> _key = new GlobalKey<ScaffoldState>();
-  HomePage();
+  final Widget? body;
+  DefaultTemplate({this.body});
 
   Widget _desktopLayout() {
     return Scaffold(
@@ -22,7 +21,7 @@ class HomePage extends StatelessWidget {
               NavigationMenu(),
               Expanded(
                 child: ContentLayoutView(
-                  contentWidget: RootPage(),
+                  contentWidget: body,
                   leftMenu: SideMenuWidget(),
                 ),
               ),
@@ -63,7 +62,7 @@ class HomePage extends StatelessWidget {
               ),
               Expanded(
                 child: ContentLayoutView(
-                  contentWidget: RootPage(),
+                  contentWidget: body,
                 ),
               ),
               Footer(),
@@ -76,10 +75,18 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenLayout(
-      mobile: _mobileLayout(),
-      tablet: _desktopLayout(),
-      desktop: _desktopLayout(),
-    );
+    return LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+      ScreenLayoutController.to.builder(constraints);
+      switch (ScreenLayoutController.to.screenType.value) {
+        case ScreenSizeType.MOBILE:
+          return _mobileLayout();
+        case ScreenSizeType.TABLET:
+          return _desktopLayout();
+        case ScreenSizeType.DESKTOP:
+        default:
+          return _desktopLayout();
+      }
+    });
   }
 }
