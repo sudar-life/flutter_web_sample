@@ -26,11 +26,13 @@ class NavigationMenu extends GetView<ScreenLayoutController> {
   List<Widget> get menus => [
         menu("홈", () {}),
         menu("블로그", () {
-          html.window.open('https://sudarlife.tistory.com/', '');
+          if (GetPlatform.isWeb)
+            html.window.open('https://sudarlife.tistory.com/', '');
         }),
         menu("유튜브", () {
-          html.window.open(
-              'https://www.youtube.com/channel/UCbMGBIayK26L4VaFrs5jyBw', '');
+          if (GetPlatform.isWeb)
+            html.window.open(
+                'https://www.youtube.com/channel/UCbMGBIayK26L4VaFrs5jyBw', '');
         }),
       ];
 
