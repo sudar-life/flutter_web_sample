@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:web_sample_02/src/controller/screen_layout_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:web_sample_02/src/controller/screen_layout_controller.dart';
 
 class NavigationMenu extends GetView<ScreenLayoutController> {
-  const NavigationMenu();
+  ScreenSizeType screenSizeType;
+  NavigationMenu(this.screenSizeType);
 
   Widget menu(String menu, GestureTapCallback onTap) {
     return InkWell(
@@ -17,65 +18,64 @@ class NavigationMenu extends GetView<ScreenLayoutController> {
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: Text(
           menu,
-          style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ),
     );
   }
 
-  void _link(String _url) async {
-    if (await canLaunch(_url)) {
-      await launch(_url);
-    }
-  }
-
-  List<Widget> get menus => [
-        menu("홈", () {}),
+  Widget _menuGroup() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        menu("홈", () {
+          Get.toNamed("/");
+        }),
         menu("블로그", () {
-          _link('https://sudarlife.tistory.com/');
+          launch("https://sudarlife.tistory.com/");
         }),
         menu("유튜브", () {
-          _link('https://www.youtube.com/channel/UCbMGBIayK26L4VaFrs5jyBw');
+          launch("https://www.youtube.com/channel/UCbMGBIayK26L4VaFrs5jyBw");
         }),
-      ];
-
-  Widget _mobileLayout() {
-    return Column(
-      children: [
-        Image.asset("assets/images/logo.png", width: 60),
-        SizedBox(height: 30),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: menus,
-        ),
       ],
     );
   }
 
+  Widget _mobileLayout() {
+    return Container(
+      child: Column(
+        children: [
+          Image.asset("assets/images/logo.png", width: 80),
+          SizedBox(height: 20),
+          _menuGroup(),
+        ],
+      ),
+    );
+  }
+
   Widget _desktopLayout() {
-    return SafeArea(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Image.asset("assets/images/logo.png", width: 80),
-            Row(children: menus)
-          ],
-        ),
+    return Container(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Image.asset("assets/images/logo.png", width: 80),
+          _menuGroup(),
+        ],
       ),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    switch (controller.screenType.value) {
+    switch (screenSizeType) {
       case ScreenSizeType.MOBILE:
         return _mobileLayout();
       case ScreenSizeType.TABLET:
         return _desktopLayout();
       case ScreenSizeType.DESKTOP:
-      default:
         return _desktopLayout();
     }
   }
