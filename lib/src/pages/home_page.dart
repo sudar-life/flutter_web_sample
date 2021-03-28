@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTemplate(
-      contents: RootContents(ScreenLayoutController.to.type.value!),
+      contents: RootContents(),
     );
   }
 }
