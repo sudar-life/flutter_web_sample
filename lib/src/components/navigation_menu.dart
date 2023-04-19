@@ -24,16 +24,23 @@ class NavigationMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+        decoration: const BoxDecoration(
+          border:
+              Border(bottom: BorderSide(width: 2, color: Color(0xff4074FB))),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset("assets/images/logo.png", width: 80),
+            Image.asset("assets/images/logo.png", height: 20),
             Row(
               children: [
                 menu("홈", () {}),
-                menu("블로그", () {}),
-                menu("유튜브", () {}),
+                menu("등하원관리", () {}),
+                menu("문서함", () {}),
+                menu("나의정보", () {}),
+                menu("관리자설정", () {}),
+                menu("로그아웃", () {}),
               ],
             )
           ],
