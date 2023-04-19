@@ -8,16 +8,16 @@ class Footer extends StatelessWidget {
     return ConstrainedBox(
       constraints: const BoxConstraints(minWidth: double.infinity),
       child: Container(
-        margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-        padding: const EdgeInsets.all(7),
+        margin: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(7),
-          color: Colors.grey.shade300,
+          borderRadius: BorderRadius.circular(0),
+          color: Color(0xffE9EBEE),
         ),
         child: Text(
-          "Copyright 2021 개발하는남자 All Rights Reserved.",
+          "Copyright 2023 EOBUBA All Rights Reserved.",
           style: TextStyle(
-            fontSize: 11,
+            fontSize: 12,
           ),
           textAlign: TextAlign.center,
         ),
