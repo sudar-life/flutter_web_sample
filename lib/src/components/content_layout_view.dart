@@ -8,23 +8,40 @@ class ContentLayoutView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(20),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Expanded(
-            child: Container(
-              child: contentWidget,
+      padding: const EdgeInsets.all(32),
+      color: Color(0xffF8F9FA),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color(0xFFFFFFFF),
+          borderRadius: BorderRadius.all(Radius.circular(16)),
+          boxShadow: [
+            BoxShadow(
+              color: Color.fromARGB(129, 211, 213, 216),
+              blurRadius: 4,
+              spreadRadius: 4,
             ),
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              ConstrainedBox(
+                constraints: BoxConstraints(minWidth: 150),
+                child: Container(
+                  child: leftMenu,
+                ),
+              ),
+              SizedBox(width: 50),
+              Expanded(
+                child: Container(
+                  child: contentWidget,
+                ),
+              ),
+            ],
           ),
-          SizedBox(width: 50),
-          ConstrainedBox(
-            constraints: BoxConstraints(minWidth: 150),
-            child: Container(
-              child: leftMenu,
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
